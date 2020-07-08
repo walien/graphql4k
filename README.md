@@ -35,3 +35,27 @@ val kodein = DI {
         .asServer(Jetty(8080))
         .start()
 ``` 
+
+A http sample file is provided into the test folder : 
+```
+POST http://localhost:8080/api/graphql
+Content-Type: text/plain
+
+query {
+  findAllPersons {
+    firstName
+  }
+}
+
+###
+
+POST http://localhost:8080/api/graphql
+Content-Type: text/plain
+
+mutation m {
+  updatePerson(person: { firstName: "Jack" }) {
+    firstName
+  }
+}
+
+```
