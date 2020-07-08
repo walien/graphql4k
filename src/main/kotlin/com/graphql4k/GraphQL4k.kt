@@ -31,7 +31,7 @@ class GraphQL4k(
     private val endpoint: String = "/api/graphql"
 ) {
 
-    fun handler(): RoutingHttpHandler {
+    fun httpHandler(): RoutingHttpHandler {
 
         val schema = toFederatedSchema(
             config = FederatedSchemaGeneratorConfig(

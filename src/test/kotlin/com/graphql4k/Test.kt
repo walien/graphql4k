@@ -24,7 +24,7 @@ fun main() {
         queries = kodein.direct.instance(),
         mutations = kodein.direct.instance()
     )
-        .handler()
+        .httpHandler()
         .asServer(Jetty(8080))
         .start()
 }
