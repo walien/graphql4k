@@ -8,3 +8,12 @@ query {
 }
 
 ###
+
+POST http://localhost:8080/api/graphql
+Content-Type: text/plain
+
+mutation m {
+  updatePerson(person: { firstName: "Elian" }) {
+    firstName
+  }
+}
