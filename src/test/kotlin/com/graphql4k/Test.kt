@@ -4,6 +4,7 @@ import com.graphql4k.api.PersonMutation
 import com.graphql4k.api.PersonQuery
 import com.graphql4k.api.ProjectMutation
 import com.graphql4k.api.ProjectQuery
+import org.http4k.routing.routes
 import org.http4k.server.Jetty
 import org.http4k.server.asServer
 import org.kodein.di.*
@@ -19,12 +20,14 @@ fun main() {
         bind<Mutation>().inSet() with singleton { PersonMutation() }
     }
 
-    GraphQL4k(
-        supportedPackages = listOf("com.graphql4k.api"),
-        queries = kodein.direct.instance(),
-        mutations = kodein.direct.instance()
+    routes(
+        GraphQL4k(
+            supportedPackages = listOf("com.graphql4k.api"),
+            queries = kodein.direct.instance(),
+            mutations = kodein.direct.instance()
+        )
+            .toHttpHandler()
     )
-        .httpHandler()
         .asServer(Jetty(8080))
         .start()
 }

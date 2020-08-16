@@ -18,7 +18,6 @@ import org.http4k.core.Status.Companion.BAD_REQUEST
 import org.http4k.core.Status.Companion.OK
 import org.http4k.routing.RoutingHttpHandler
 import org.http4k.routing.bind
-import org.http4k.routing.routes
 
 private val defaultJacksonObjectMapper = jacksonObjectMapper()
     .setSerializationInclusion(JsonInclude.Include.NON_NULL)
@@ -31,7 +30,7 @@ class GraphQL4k(
     private val endpoint: String = "/api/graphql"
 ) {
 
-    fun httpHandler(): RoutingHttpHandler {
+    fun toHttpHandler(): RoutingHttpHandler {
 
         val schema = toFederatedSchema(
             config = FederatedSchemaGeneratorConfig(
@@ -47,8 +46,7 @@ class GraphQL4k(
         val graphql = GraphQL.newGraphQL(schema)
             .build()
 
-        return routes(
-            endpoint bind Method.POST to { request: Request ->
+        return endpoint bind Method.POST to { request: Request ->
                 val executionResult = graphql
                     .execute(request.bodyString())
                 when {
@@ -64,7 +62,6 @@ class GraphQL4k(
                     else -> Response(OK)
                 }
             }
-        )
     }
 
     private fun GraphQLResponse<*>.toJson(): String = mapper.writeValueAsString(this)

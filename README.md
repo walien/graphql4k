@@ -26,12 +26,14 @@ val kodein = DI {
         bind<Mutation>().inSet() with singleton { PersonMutation() }
     }
 
-    GraphQL4k(
-        supportedPackages = listOf("com.graphql4k.api"),
-        queries = kodein.direct.instance(),
-        mutations = kodein.direct.instance()
+    routes(
+        GraphQL4k(
+            supportedPackages = listOf("com.graphql4k.api"),
+            queries = kodein.direct.instance(),
+            mutations = kodein.direct.instance()
+        )
+        .toHttpHandler()
     )
-        .httpHandler()
         .asServer(Jetty(8080))
         .start()
 ``` 
