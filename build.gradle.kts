@@ -12,6 +12,7 @@ repositories {
 
 dependencies {
     implementation("com.expediagroup:graphql-kotlin-federation:3.3.1")
+    implementation("com.expediagroup:graphql-kotlin-schema-generator:3.3.1")
     implementation("org.http4k:http4k-core:3.252.0")
     testImplementation("org.http4k:http4k-server-jetty:3.252.0")
     testImplementation("org.kodein.di:kodein-di:7.0.0")
